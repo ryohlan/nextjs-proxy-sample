@@ -73,4 +73,5 @@ const nextConfig = {
 ```
 
 こうすることで `localhost:3000/_next1/_next/**` のアクセスを `localhost:3001/_next/**` に流すことができる。
-  ...
+
+あとは注意する点として `next1`　のプロジェクトでは必ず　`pages/next1` 以下しかルーティングを定義しないことと画像やスタイルなどの静的リソースは `public/next1` 以下に置くことなどがある。
