@@ -1,3 +1,5 @@
+# nextjs-proxy-sample
+
 同一ドメインに対するアクセスをパス毎に複数の Next.js に割り振るサンプル
 
 起動
@@ -11,11 +13,12 @@ yarn --cwd proxy start // localhost:3000
 ```
 
 localhost:3000/next1 → localhost:3001/next1
+
 localhost:3000/next2 → localhost:3001/next2
 
 ## やっていること
 
-proxy/index.mjs で `express` でサーバを立てて `http-proxy-middleware` を使ってプロキシを実装している。
+`proxy/index.mjs` で `express` でサーバを立てて `http-proxy-middleware` を使ってプロキシを実装している。
 ページへの単純なアクセスは
 
 ```
@@ -31,7 +34,7 @@ app
 
 みたいな感じでアクセスを流せば良い。
 
-また、Next.js は必要なアセットを `/_next` ディレクトリに配置している。これは配置・命名が変更ができないのでデフォルトのままだと `localhost:3000/next1` のページから `localhost:3000/_next/**` のアセットを読もうとする。プロキシサーバーは `localhost:3000/_next/**` のアクセスが `/next1` からなのか `/next2 からなのか判断できないのでここをうまくやる必要がある。 ここで `next.config.js` の`assetPrefix` を使う。これは用途としては CDN にアセットを配置する場合を想定して読み先を返るものである。
+また、Next.js は必要なアセットを `/_next` ディレクトリに配置している。これは配置・命名が変更ができないのでデフォルトのままだと `localhost:3000/next1` のページから `localhost:3000/_next/**` のアセットを読もうとする。プロキシサーバーは `localhost:3000/_next/**` のアクセスが `/next1` からなのか `/next2` からなのか判断できないのでここをうまくやる必要がある。 ここで `next.config.js` の`assetPrefix` を使う。これは用途としては CDN にアセットを配置する場合を想定して読み先を変更するものである。
 
 ```
 const nextConfig = {
@@ -70,3 +73,4 @@ const nextConfig = {
 ```
 
 こうすることで `localhost:3000/_next1/_next/**` のアクセスを `localhost:3001/_next/**` に流すことができる。
+  ...
