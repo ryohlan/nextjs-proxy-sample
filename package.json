@@ -2,5 +2,8 @@
   "name": "proxy-sample",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn --cwd ./next1 dev && yarn --cwd ./next2 dev && yarn --cwd ./proxy start"
+  }
 }

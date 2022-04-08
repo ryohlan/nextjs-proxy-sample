@@ -11,21 +11,21 @@ app.use(morgan("dev"));
 
 // next1へのプロキシ設定
 app
-  .use("/_next1", (req, res, next) => {
-    return createProxyMiddleware({
-      target: "http://localhost:3001",
-      changeOrigin: true,
-      pathRewrite: {
-        _next1: "",
-      },
-    })(req, res, next);
-  })
   .use(
     "/next1",
     createProxyMiddleware({
       target: "http://localhost:3001",
       changeOrigin: true,
-      pathRewrite: {},
+    })
+  )
+  .use(
+    "/_next1",
+    createProxyMiddleware({
+      target: "http://localhost:3001",
+      changeOrigin: true,
+      pathRewrite: {
+        _next1: "",
+      },
     })
   );
 
@@ -36,18 +36,18 @@ app
     createProxyMiddleware({
       target: "http://localhost:3002",
       changeOrigin: true,
-      pathRewrite: {},
     })
   )
-  .use("/_next2", (req, res, next) => {
-    return createProxyMiddleware({
+  .use(
+    "/_next2",
+    createProxyMiddleware({
       target: "http://localhost:3002",
       changeOrigin: true,
       pathRewrite: {
         _next2: "",
       },
-    })(req, res, next);
-  });
+    })
+  );
 
 app.listen(PORT, HOST, () => {
   console.log(`Starting Proxy at ${HOST}:${PORT}`);
